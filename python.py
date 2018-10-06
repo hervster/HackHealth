@@ -9,12 +9,8 @@ class BottleStorage:
         self.map[baby] = baby.bottles
 
     def addBottle(self, bottle):
-        self.map[bottle.baby].insert(bottle)
-
-    def insertBottle(self, bottle, bottleList):
-        """inserts bottle into sorted list"""
-        bottleList.append(bottle)
-        bottle.sort().reverse()
+        self.map[bottle.baby].append(bottle)
+        self.map[bottle.baby].sort().reverse()
                 
                 
 
@@ -64,7 +60,10 @@ class Bottle:
             return 43200 # 12 hrs
         elif self.storageMethod == "frozen":
             if self.thawed:
+                # if thawed in fridge:
                 return 86400 # 24 hrs
+                # if thawed at room temp:
+                # return 7200 # 2 hrs
             else:
                 return 31536000 # 12 months
         else:
@@ -76,7 +75,6 @@ class Bottle:
             expTime = self.timeToEpoch(self.timeThawed) + self.totalTime()
             return expTime - datetime.datetime.now()
         expTime = self.timeToEpoch(self.timeProduced) + self.totalTime()
-        secondsLeft = expTime - datetime.datetime.now()
         return expTime - datetime.datetime.now()
 
 if __name__ == "__main__":
